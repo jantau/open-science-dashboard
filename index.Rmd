@@ -1,0 +1,154 @@
+---
+title: "Open Science Dashboard "
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+    source_code: embed
+    
+# author: Jan Taubitz
+# email: jantaubitz@gmx.de
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+source("data_1.R", encoding = 'UTF-8')
+#source("data_3_rcrossref.R", encoding = 'UTF-8')
+```
+
+<style>
+body {
+  max-width: 1200px; 
+  margin: 0 auto 0 auto;
+}
+</style>
+
+
+Row {data-height=auto}
+-----------------------------------------------------------------------
+
+### Analyse 1
+
+<font size="6"> Open Access-Status von Artikeln mit Charité-Beteiligung 2015-2020</font>
+
+
+Row {data-height=500}
+-----------------------------------------------------------------------
+
+
+### Artikel mit Charité-Beteiligung (in %)
+
+```{r}
+status_absolute
+```
+
+### Artikel mit Charité-Corresponding Author (in %)
+
+```{r}
+status_absolute_area
+```
+
+Row {data-height=500}
+-----------------------------------------------------------------------
+
+
+### Artikel mit Charité-Beteiligung (absolute Zahlen)
+
+```{r}
+status_percent
+```
+
+### Artikel mit Charité-Corresponding Author (absolute Zahlen)
+
+```{r}
+status_absolute_spline
+```
+
+
+
+
+Row {data-height=auto}
+-----------------------------------------------------------------------
+
+### Analyse 2
+
+<font size="6"> Open Access-Status von Artikeln mit Charité-Beteiligung auf Verlags- und Journal-Ebene im Jahr 2020 </font>
+
+
+Row {data-height=500}
+-----------------------------------------------------------------------
+
+### Verlage in absoluten Zahlen
+
+```{r}
+publisher_absolute
+```
+
+### Verlage in absoluten Zahlen
+
+```{r}
+publisher_donut
+```
+
+Row {data-height=500}
+-----------------------------------------------------------------------
+
+### Zeitschriften in absoluten Zahlen
+
+```{r}
+journal_absolute
+```
+
+### Zeitschriften in %
+
+```{r}
+journal_percent
+```
+
+Row {data-height=auto}
+-----------------------------------------------------------------------
+
+### Analyse 3
+
+<font size="6"> Median und Mittelwert der Zitierungen von den 2018 publizierten Artikeln mit Charité-Beteiligung (Daten von Crossref)</font>
+
+Row 
+-----------------------------------------------------------------------
+
+###
+
+```{r eval=FALSE, include=FALSE}
+median_citation
+```
+
+###
+
+```{r eval=FALSE, include=FALSE}
+mean_citation
+```
+
+
+Row {data-height=auto}
+-----------------------------------------------------------------------
+
+### Analyse 4
+
+<font size="6"> Lizenzen der mit Charité-Beteiligung publizierten Artikel</font>
+
+Row 
+-----------------------------------------------------------------------
+
+###
+
+```{r eval=FALSE, include=FALSE}
+load("charts/chart_lizenzen.Rda")
+chart_lizenzen
+```
+
+###
+
+```{r eval=FALSE, include=FALSE}
+load("charts/chart_lizenzen_oa.Rda")
+chart_lizenzen_oa
+```
