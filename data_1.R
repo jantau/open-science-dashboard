@@ -34,6 +34,7 @@ cha_data <- read_csv(raw_data)
 
 oa_status_colors <- c("gold", "hybrid", "green", "bronze", "closed", "NA")
 color <- c("#F4C244", "#A0CBDA", "#4FAC5B", "#D85DBF", "#2C405E", "#5F7036")
+colors_df <- data.frame(oa_status = oa_status_colors, color)
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Clean data, create some new variables ----
@@ -73,14 +74,24 @@ status_absolute <-
          "column",
          hcaes(x = year, y = count, group = oa_status)) %>%
   hc_plotOptions(series = list(stacking = "normal")) %>%
-  hc_colors(color)
+  hc_colors(color) %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "status_absolute",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 status_absolute_spline <-
 hchart(data_sum,
        "spline",
        hcaes(x = factor(year), y = count, group = oa_status)) %>%
   hc_colors(color) %>%
-  hc_tooltip(shared = TRUE)
+  hc_tooltip(shared = TRUE) %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "status_absolute_spline",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 status_absolute_area <-
 hchart(data_sum,
@@ -88,7 +99,12 @@ hchart(data_sum,
        hcaes(x = factor(year), y = count, group = oa_status)) %>%
   hc_colors(color) %>%
   hc_tooltip(shared = TRUE) %>%
-  hc_plotOptions(area = list(stacking = TRUE))
+  hc_plotOptions(area = list(stacking = TRUE)) %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "status_absolute_area",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 # saveWidget(status_absolute, file = "status_absolute.html") # , selfcontained = TRUE
 # %>% hc_title(text = "Open access status in absolute numbers", align = "left", style = list(fontSize = "12px"))
@@ -102,7 +118,12 @@ status_percent <-
   hc_colors(color) %>%
   hc_yAxis(labels = list(format = '{value} %'),
            max = 100) %>% # , reversedStacks = FALSE
-  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.value} Artikel ({point.percent} %)")
+  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.value} Artikel ({point.percent} %)") %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "status_percent",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 # reversed bar stacks https://www.highcharts.com/forum/viewtopic.php?t=10916
 
@@ -135,7 +156,12 @@ journal_absolute <- journal_data_2 %>%
            scrollbar = list(enabled = TRUE)) %>%
   hc_size(height = 500) %>%
   hc_yAxis(reversedStacks = FALSE) %>%
-  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.count} Artikel ({point.percent} %)<br>{point.count_zs} Artikel insgesamt")
+  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.count} Artikel ({point.percent} %)<br>{point.count_zs} Artikel insgesamt") %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "journal_absolute",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 journal_percent <- journal_data_2 %>%
   hchart("bar", hcaes(x = journal_title, y = percent, group = oa_status)) %>%
@@ -147,7 +173,12 @@ journal_percent <- journal_data_2 %>%
   hc_yAxis(labels = list(format = '{value} %'),
                          max = 100, reversedStacks = FALSE) %>%
   hc_size(height = 500) %>%
-  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.count} Artikel ({point.percent} %)<br>{point.value_zs} Artikel insgesamt")
+  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.count} Artikel ({point.percent} %)<br>{point.value_zs} Artikel insgesamt") %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "journal_percent",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Visualizations of publishers and oa_status ----
@@ -193,7 +224,12 @@ publisher_absolute <- data_publisher_join_sum_2 %>%
            scrollbar = list(enabled = TRUE)) %>%
   hc_size(height = 500) %>%
   hc_yAxis(reversedStacks = FALSE) %>%
-  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.count} Artikel ({point.percent} %)<br>{point.count_pub} Artikel insgesamt")
+  hc_tooltip(pointFormat = "<b>{point.oa_status}</b><br>{point.count} Artikel ({point.percent} %)<br>{point.count_pub} Artikel insgesamt") %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "publisher_absolute",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 publisher_donut <- data_publisher_join %>%
   group_by(publisher) %>%
@@ -207,7 +243,12 @@ publisher_donut <- data_publisher_join %>%
          hcaes(x = publisher_2, y = count),
          size = "65%",
          innerSize = "50%") %>%
-  hc_tooltip(pointFormat = "{point.count} Artikel ({point.perc} %)")
+  hc_tooltip(pointFormat = "{point.count} Artikel ({point.perc} %)") %>%
+  hc_exporting(
+    enabled = TRUE,
+    filename = "publisher_donut",
+    buttons = list(contextButton = list(menuItems = c('downloadPNG', 'downloadJPEG', 'separator', 'downloadCSV')))
+  )
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # End ----
