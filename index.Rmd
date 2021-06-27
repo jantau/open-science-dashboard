@@ -2,27 +2,21 @@
 title: "Open Science Dashboard "
 output: 
   flexdashboard::flex_dashboard:
+    css: styles.css
     orientation: rows
     vertical_layout: scroll
-    source_code: embed
+    source_code: https://github.com/jantau/open-science-dashboard
     
 # author: Jan Taubitz
 # email: jantaubitz@gmx.de
 ---
 
 ```{r setup, include=FALSE}
-library(flexdashboard)
-
 source("data_1.R", encoding = 'UTF-8')
 source("data_3_rcrossref.R", encoding = 'UTF-8')
 ```
 
-<style>
-body {
-  max-width: 1200px; 
-  margin: 0 auto 0 auto;
-}
-</style>
+
 
 
 Row {data-height=auto}

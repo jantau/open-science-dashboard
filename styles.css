@@ -1,0 +1,9 @@
+body {
+  max-width: 1200px;
+  margin: 0 auto 0 auto;
+}
+
+.navbar-inverse {
+    background-color: #FFCA05;
+    border-color: #FFCA05;
+}

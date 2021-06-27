@@ -44,9 +44,13 @@ data <- cha_data %>%
   clean_names() %>%
   mutate(doi = tolower(doi)) %>% # Convert dois to lower case
   distinct(doi, .keep_all = TRUE) %>%
+  mutate(doi = str_replace_all(doi, c("%28" = "(", "%29" = ")"))) %>% # Repair dois in dataset
   mutate(oa_color = replace_na(oa_color, "NA")) %>%
   mutate(oa_status = factor(oa_color, levels = oa_status_colors)) %>%
   mutate(is_oa = if_else(oa_status %in% c("gold", "hybrid", "green"), TRUE, FALSE), .after = "oa_status")
+
+#test <- data %>%
+#  filter(grepl(".*%29.*", doi))
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Exploratory data analysis ----
